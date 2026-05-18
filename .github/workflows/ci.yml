@@ -22,4 +22,5 @@ jobs:
     secrets: inherit
     with:
       project_path: 'Platform.StoreImageUpload.Function.csproj'
+      test_path: 'Platform.StoreImageUpload.Function.Tests/Platform.StoreImageUpload.Function.Tests.csproj'
       dependencies: 'Platform-System/Platform.Contracts'
