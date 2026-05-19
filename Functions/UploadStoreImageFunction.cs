@@ -25,6 +25,9 @@ public sealed class UploadStoreImageFunction
         _storeApiClient = storeApiClient;
     }
 
+    /// <summary>
+    /// Uploads a store image by type.
+    /// </summary>
     [Function(nameof(UploadStoreImageFunction))]
     public async Task<HttpResponseData> Run(
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = "stores/me/images/{type}")]
