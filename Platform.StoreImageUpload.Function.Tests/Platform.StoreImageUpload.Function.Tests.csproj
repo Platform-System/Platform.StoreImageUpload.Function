@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
     <PackageReference Include="xunit" Version="2.9.2" />
@@ -20,10 +22,13 @@
 
   <ItemGroup>
     <Compile Include="..\Configurations\BlobStorageOptions.cs" Link="Source\Configurations\BlobStorageOptions.cs" />
+    <Compile Include="..\Configurations\StoreApiOptions.cs" Link="Source\Configurations\StoreApiOptions.cs" />
     <Compile Include="..\Enums\StoreImageType.cs" Link="Source\Enums\StoreImageType.cs" />
     <Compile Include="..\Helpers\ImageSignatureValidator.cs" Link="Source\Helpers\ImageSignatureValidator.cs" />
+    <Compile Include="..\Models\CurrentStoreResponse.cs" Link="Source\Models\CurrentStoreResponse.cs" />
     <Compile Include="..\Models\MultipartFileData.cs" Link="Source\Models\MultipartFileData.cs" />
     <Compile Include="..\Models\UploadStoreImageResult.cs" Link="Source\Models\UploadStoreImageResult.cs" />
+    <Compile Include="..\Services\StoreApiClient.cs" Link="Source\Services\StoreApiClient.cs" />
     <Compile Include="..\Services\StoreImageUploadService.cs" Link="Source\Services\StoreImageUploadService.cs" />
   </ItemGroup>
 

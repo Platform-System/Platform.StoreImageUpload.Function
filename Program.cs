@@ -30,7 +30,6 @@ var host = new HostBuilder()
         });
 
         services.AddSingleton<StoreImageUploadService>();
-        services.AddScoped<StoreApiClient>();
     })
     .Build();
 
