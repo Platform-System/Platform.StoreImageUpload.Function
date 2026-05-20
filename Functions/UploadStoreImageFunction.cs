@@ -89,6 +89,8 @@ public sealed class UploadStoreImageFunction
 
             if (!setImageResult.IsSuccess)
             {
+                await _storeImageUploadService.DeleteAsync(result, cancellationToken);
+
                 var failed = request.CreateResponse(setImageResult.StatusCode);
                 await failed.WriteStringAsync(setImageResult.Error ?? "Unable to save store image.", cancellationToken);
                 return failed;

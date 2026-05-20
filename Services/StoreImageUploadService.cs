@@ -82,4 +82,26 @@ public sealed class StoreImageUploadService
             Url = blobClient.Uri.ToString()
         };
     }
+
+    public async Task DeleteAsync(UploadStoreImageResult uploadResult, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(_blobStorageOptions.ConnectionString)
+            || string.IsNullOrWhiteSpace(uploadResult.ContainerName)
+            || string.IsNullOrWhiteSpace(uploadResult.BlobName))
+        {
+            return;
+        }
+
+        try
+        {
+            var blobServiceClient = new BlobServiceClient(_blobStorageOptions.ConnectionString);
+            var containerClient = blobServiceClient.GetBlobContainerClient(uploadResult.ContainerName);
+            var blobClient = containerClient.GetBlobClient(uploadResult.BlobName);
+            await blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken);
+        }
+        catch (Azure.RequestFailedException)
+        {
+            // Không che mất lỗi nghiệp vụ gốc nếu cleanup blob thất bại.
+        }
+    }
 }
