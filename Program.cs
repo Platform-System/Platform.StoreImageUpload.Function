@@ -15,18 +15,22 @@ var host = new HostBuilder()
 
         services
             .AddOptions<BlobStorageOptions>()
-            .Bind(context.Configuration.GetSection(BlobStorageOptions.SectionName));
+            .Bind(context.Configuration.GetSection(BlobStorageOptions.SectionName))
+            .Validate(options => !string.IsNullOrWhiteSpace(options.ConnectionString), "BlobStorage:ConnectionString is required.")
+            .Validate(options => !string.IsNullOrWhiteSpace(options.ContainerName), "BlobStorage:ContainerName is required.")
+            .Validate(options => options.MaxFileSizeInMb > 0, "BlobStorage:MaxFileSizeInMb must be greater than 0.")
+            .ValidateOnStart();
 
         services
             .AddOptions<StoreApiOptions>()
-            .Bind(context.Configuration.GetSection(StoreApiOptions.SectionName));
+            .Bind(context.Configuration.GetSection(StoreApiOptions.SectionName))
+            .Validate(options => !string.IsNullOrWhiteSpace(options.Address), "StoreApi:Address is required.")
+            .ValidateOnStart();
 
         services.AddHttpClient<StoreApiClient>((serviceProvider, client) =>
         {
             var options = serviceProvider.GetRequiredService<Microsoft.Extensions.Options.IOptions<StoreApiOptions>>().Value;
-            client.BaseAddress = string.IsNullOrWhiteSpace(options.Address)
-                ? new Uri("http://localhost")
-                : new Uri(options.Address);
+            client.BaseAddress = new Uri(options.Address);
         });
 
         services.AddSingleton<StoreImageUploadService>();
